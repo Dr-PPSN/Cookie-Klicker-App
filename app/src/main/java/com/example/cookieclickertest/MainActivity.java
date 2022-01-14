@@ -30,6 +30,9 @@ public class MainActivity extends AppCompatActivity {
     public int cheat = 0;
     TextView textView_counter;
 
+    //TODO: New Shop Objects
+    //TODO: App Design
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,11 +72,18 @@ public class MainActivity extends AppCompatActivity {
         button_cookie.setOnTouchListener(new View.OnTouchListener() {
             public boolean onTouch(View v, MotionEvent event) {
                 if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    buttonGross();
+                    button_cookie.animate().scaleX(1.2f).scaleY(1.2f).setDuration(300).start();
                 } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    buttonKlein();
+                    button_cookie.animate().scaleX(0.8f).scaleY(0.8f).setDuration(300).start();
                 }
                 return false;
+            }
+        });
+
+        button_cookie.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                int manualyClick = 1;
+                cookieClick(manualyClick);
             }
         });
 
@@ -194,14 +204,10 @@ public class MainActivity extends AppCompatActivity {
     }
     public void buttonGross(){
         ImageButton button_cookie = findViewById(R.id.button_cookie);
-        button_cookie.animate().setStartDelay(1);
-        button_cookie.animate().scaleYBy((float) 0.8).setDuration(300);
-        button_cookie.animate().scaleXBy((float) 0.8).setDuration(300);
+        button_cookie.animate().scaleX(1.2f).scaleY(1.2f).setDuration(300).start();
     }
     public void buttonKlein(){
         ImageButton button_cookie = findViewById(R.id.button_cookie);
-        button_cookie.animate().setStartDelay(1);
-        button_cookie.animate().scaleYBy((float) -0.4).setDuration(300);
-        button_cookie.animate().scaleXBy((float) -0.4).setDuration(300);
+        button_cookie.animate().scaleX(0.8f).scaleY(0.8f).setDuration(300).start();
     }
 }

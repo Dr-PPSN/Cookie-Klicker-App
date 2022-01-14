@@ -46,7 +46,7 @@ public class Shop extends AppCompatActivity {
         multi = loadFile(digitsFromFile, FILE_MULTI);
         grandma = loadFile(digitsFromFile, FILE_GRANDMA);
 
-        int autoPreis = 200;
+        int autoPreis = 1000;
         int multiPreis = 60;
         int grandmaPreis = 2500;
 
