@@ -109,7 +109,6 @@ public class Shop extends AppCompatActivity {
         });
 
     }
-    //TODO: Add feature to purchase upgrades - Autoclick and Multiplicator
     public int purchaseUpgrade(int input, int buttonText, int scoreInt){
         if(scoreInt >= buttonText){
             score = score - buttonText;
@@ -130,8 +129,6 @@ public class Shop extends AppCompatActivity {
         try {
             fos = openFileOutput(FILE, MODE_PRIVATE);
             fos.write(data.getBytes());
-
-            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE, Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

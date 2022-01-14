@@ -117,8 +117,6 @@ public class MainActivity extends AppCompatActivity {
          try {
              fos = openFileOutput(FILE, MODE_PRIVATE);
              fos.write(data.getBytes());
-
-             Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE, Toast.LENGTH_LONG).show();
          } catch (FileNotFoundException e) {
              e.printStackTrace();
          } catch (IOException e) {
