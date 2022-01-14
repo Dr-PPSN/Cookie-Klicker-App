@@ -46,21 +46,23 @@ public class Shop extends AppCompatActivity {
         multi = loadFile(digitsFromFile, FILE_MULTI);
         grandma = loadFile(digitsFromFile, FILE_GRANDMA);
 
-        int autoPreis = 100;
-        int multiPreis = 20;
+        int autoPreis = 200;
+        int multiPreis = 60;
+        int grandmaPreis = 2500;
 
         textView_counter_shop.setText((String.valueOf(score)));
         anzahl_auto.setText(String.valueOf(auto));
         anzahl_multi.setText(String.valueOf(multi));
+        anzahl_grandma.setText(String.valueOf(grandma));
 
         if (auto != 0){
             for (int i = 0; i < auto; i++){
-                autoPreis = autoPreis * 2;
+                autoPreis = autoPreis * 3;
             }
             button_buy_auto.setText(String.valueOf(autoPreis));
         }
         else {
-            button_buy_auto.setText("100");
+            button_buy_auto.setText(String.valueOf(autoPreis));
         }
         if (multi != 0){
             for (int i = 0; i < multi; i++){
@@ -69,7 +71,16 @@ public class Shop extends AppCompatActivity {
             button_buy_multi.setText(String.valueOf(multiPreis));
         }
         else {
-            button_buy_multi.setText("20");
+            button_buy_multi.setText(String.valueOf(multiPreis));
+        }
+        if (grandma != 0){
+            for (int i = 0; i < grandma; i++){
+                grandmaPreis = grandmaPreis * 2;
+            }
+            button_buy_grandma.setText(String.valueOf(grandmaPreis));
+        }
+        else {
+            button_buy_grandma.setText(String.valueOf(grandmaPreis));
         }
 
         button_back.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +99,7 @@ public class Shop extends AppCompatActivity {
                     anzahl_auto.setText(String.valueOf(x1));
                     auto = x1;
                     String test = button_buy_auto.getText().toString();
-                    int y = Integer.parseInt(test) *2;
+                    int y = Integer.parseInt(test) *3;
                     button_buy_auto.setText(String.valueOf(y));
                     textView_counter_shop.setText((String.valueOf(score)));
                 }
@@ -118,9 +129,9 @@ public class Shop extends AppCompatActivity {
                 int inputAnzahlGrandma = Integer.parseInt(anzahl_grandma.getText().toString());
                 int buttenGrandmaText = Integer.parseInt(button_buy_grandma.getText().toString());
                 if(score >= buttenGrandmaText) {
-                    int x2 = purchaseUpgrade(inputAnzahlGrandma, buttenGrandmaText, score);
-                    anzahl_grandma.setText(String.valueOf(x2));
-                    grandma = x2;
+                    int x3 = purchaseUpgrade(inputAnzahlGrandma, buttenGrandmaText, score);
+                    anzahl_grandma.setText(String.valueOf(x3));
+                    grandma = x3;
                     String test = button_buy_grandma.getText().toString();
                     int y = Integer.parseInt(test) *2;
                     button_buy_grandma.setText(String.valueOf(y));
@@ -131,7 +142,6 @@ public class Shop extends AppCompatActivity {
         });
 
     }
-    //TODO: Add feature to purchase upgrades - Autoclick and Multiplicator
     public int purchaseUpgrade(int input, int buttonText, int scoreInt){
         if(scoreInt >= buttonText){
             score = score - buttonText;
@@ -153,8 +163,6 @@ public class Shop extends AppCompatActivity {
         try {
             fos = openFileOutput(FILE, MODE_PRIVATE);
             fos.write(data.getBytes());
-
-            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE, Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

@@ -64,7 +64,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="160dp"
         android:layout_marginEnd="8dp"
-        android:text="100"
+        android:text="1000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/anzahl_auto"
         app:layout_constraintTop_toTopOf="parent" />
@@ -90,7 +90,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="66dp"
         android:layout_marginEnd="8dp"
-        android:text="20"
+        android:text="60"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/anzahl_multi"
         app:layout_constraintTop_toBottomOf="@+id/button_buy_auto" />

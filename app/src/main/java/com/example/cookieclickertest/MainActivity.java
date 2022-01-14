@@ -56,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     public int multi = 0;
     public int clickvalue = 1;
     public int grandma = 0;
+    public int cheat = 0;
     TextView textView_counter;
 
     @Override
@@ -64,15 +65,35 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Button button_save = findViewById(R.id.button_save);
         Button button_Shop = findViewById(R.id.button_Shop);
+        Button button_reset = findViewById(R.id.button_reset);
         textView_counter = findViewById(R.id.textView_counter);
         ImageButton button_cookie = findViewById(R.id.button_cookie);
         auto = loadFile(digitsFromFile, FILE_AUTO);
         multi = loadFile(digitsFromFile, FILE_MULTI);
         grandma = loadFile(digitsFromFile, FILE_GRANDMA);
-        BigInteger BigScore;
         String zwichenString = String.valueOf(loadFile(digitsFromFile, FILE_SCORE));
         textView_counter.setText(zwichenString);
         clickvalue = calculateClickValue(clickvalue,multi);
+
+        textView_counter.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                cheat++;
+                if (cheat == 3){
+                    textView_counter.setText(String.valueOf(Integer.valueOf((String) textView_counter.getText())+(10000)));
+                    cheat = 0;
+                }
+            }
+        });
+
+        button_reset.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+                auto = 0;
+                multi = 0;
+                grandma = 0;
+                textView_counter.setText(String.valueOf(0));
+                saveAll();
+            }
+        });
 
         button_cookie.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -132,13 +153,9 @@ public class MainActivity extends AppCompatActivity {
         try {
             fos = openFileOutput(FILE, MODE_PRIVATE);
             fos.write(data.getBytes());
-
-            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE, Toast.LENGTH_LONG).show();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (fos!=null){
                 try {
                     fos.close();
@@ -198,6 +215,6 @@ public class MainActivity extends AppCompatActivity {
     }
     public void grandmaFunctionality(int grandma){
         int grandmaValue = 50 * grandma;
-        cookieClick(grandmaValue);
+        textView_counter.setText(String.valueOf(Integer.valueOf((String) textView_counter.getText())+(grandmaValue)));
     }
 }
