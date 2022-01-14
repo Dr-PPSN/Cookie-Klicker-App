@@ -1,50 +1,21 @@
 package com.example.cookieclickertest;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.ComponentName;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.content.IntentSender;
-import android.content.ServiceConnection;
-import android.content.SharedPreferences;
-import android.content.pm.ApplicationInfo;
-import android.content.pm.PackageManager;
-import android.content.res.AssetManager;
-import android.content.res.Configuration;
-import android.content.res.Resources;
-import android.database.DatabaseErrorHandler;
-import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Looper;
-import android.os.ParcelFileDescriptor;
-import android.os.UserHandle;
 import android.util.Log;
-import android.view.Display;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.*;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.math.BigInteger;
-import java.nio.charset.StandardCharsets;
 
 public class MainActivity extends AppCompatActivity {
     private static final String FILE_SCORE = "score.txt";
@@ -95,10 +66,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        button_cookie.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                int manualyClick = 1;
-                cookieClick(manualyClick);
+        button_cookie.setOnTouchListener(new View.OnTouchListener() {
+            public boolean onTouch(View v, MotionEvent event) {
+                if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                    buttonGross();
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    buttonKlein();
+                }
+                return false;
             }
         });
 
@@ -216,5 +191,17 @@ public class MainActivity extends AppCompatActivity {
     public void grandmaFunctionality(int grandma){
         int grandmaValue = 50 * grandma;
         textView_counter.setText(String.valueOf(Integer.valueOf((String) textView_counter.getText())+(grandmaValue)));
+    }
+    public void buttonGross(){
+        ImageButton button_cookie = findViewById(R.id.button_cookie);
+        button_cookie.animate().setStartDelay(1);
+        button_cookie.animate().scaleYBy((float) 0.8).setDuration(300);
+        button_cookie.animate().scaleXBy((float) 0.8).setDuration(300);
+    }
+    public void buttonKlein(){
+        ImageButton button_cookie = findViewById(R.id.button_cookie);
+        button_cookie.animate().setStartDelay(1);
+        button_cookie.animate().scaleYBy((float) -0.4).setDuration(300);
+        button_cookie.animate().scaleXBy((float) -0.4).setDuration(300);
     }
 }
