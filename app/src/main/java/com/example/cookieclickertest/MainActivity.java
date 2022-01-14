@@ -50,10 +50,12 @@ public class MainActivity extends AppCompatActivity {
     private static final String FILE_SCORE = "score.txt";
     private static final String FILE_AUTO = "auto.txt";
     private static final String FILE_MULTI = "multi.txt";
+    private static final String FILE_GRANDMA = "grandma.txt";
     public int digitsFromFile = 0;
     public int auto = 0;
     public int multi = 0;
     public int clickvalue = 1;
+    public int grandma = 0;
     TextView textView_counter;
 
     @Override
@@ -63,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
         Button button_save = findViewById(R.id.button_save);
         Button button_Shop = findViewById(R.id.button_Shop);
         textView_counter = findViewById(R.id.textView_counter);
-        //TextView textView_counter = findViewById(R.id.textView_counter);
         ImageButton button_cookie = findViewById(R.id.button_cookie);
         auto = loadFile(digitsFromFile, FILE_AUTO);
         multi = loadFile(digitsFromFile, FILE_MULTI);
+        grandma = loadFile(digitsFromFile, FILE_GRANDMA);
         BigInteger BigScore;
         String zwichenString = String.valueOf(loadFile(digitsFromFile, FILE_SCORE));
         textView_counter.setText(zwichenString);
@@ -104,32 +106,47 @@ public class MainActivity extends AppCompatActivity {
                 }
             }, delay);
         }
+
+        if (grandma > 0){
+            final Handler grandmaHandler = new Handler();
+            final int delay = 1000;
+
+            grandmaHandler.postDelayed(new Runnable(){
+                public void run() {
+                    grandmaFunctionality(grandma);
+                    grandmaHandler.postDelayed(this, delay);
+                }
+            }, delay);
+        }
     }
     public void saveAll(){
         String data = String.valueOf(textView_counter.getText());
         saveToFile(data,FILE_SCORE);
         saveToFile(String.valueOf(auto),FILE_AUTO);
         saveToFile(String.valueOf(multi),FILE_MULTI);
+        saveToFile(String.valueOf(grandma), FILE_GRANDMA);
     }
 
     private void saveToFile(String data, String FILE){
         FileOutputStream fos = null;
-         try {
-             fos = openFileOutput(FILE, MODE_PRIVATE);
-             fos.write(data.getBytes());
-         } catch (FileNotFoundException e) {
-             e.printStackTrace();
-         } catch (IOException e) {
-             e.printStackTrace();
-         }finally {
-             if (fos!=null){
-                 try {
-                     fos.close();
-                 }catch (IOException e){
-                     e.printStackTrace();
-                 }
-             }
-         }
+        try {
+            fos = openFileOutput(FILE, MODE_PRIVATE);
+            fos.write(data.getBytes());
+
+            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE, Toast.LENGTH_LONG).show();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (fos!=null){
+                try {
+                    fos.close();
+                }catch (IOException e){
+                    e.printStackTrace();
+                }
+            }
+        }
     }
     public int loadFile(int digitFromFile, String FILE){
         FileInputStream fis = null;
@@ -178,5 +195,9 @@ public class MainActivity extends AppCompatActivity {
     public void cookieClick(int autoClickValue){
         // increment the cookie counter by 1 each time the cookie button is clicked
         textView_counter.setText(String.valueOf(Integer.valueOf((String) textView_counter.getText())+(clickvalue*autoClickValue)));
+    }
+    public void grandmaFunctionality(int grandma){
+        int grandmaValue = 50 * grandma;
+        cookieClick(grandmaValue);
     }
 }

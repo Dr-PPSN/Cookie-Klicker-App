@@ -21,10 +21,12 @@ public class Shop extends AppCompatActivity {
     private static final String FILE_SCORE = "score.txt";
     private static final String FILE_AUTO = "auto.txt";
     private static final String FILE_MULTI = "multi.txt";
+    private static final String FILE_GRANDMA = "grandma.txt";
     public int digitsFromFile = 0;
     public int score = 0;
     public int auto = 0;
     public int multi = 0;
+    public int grandma = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,13 +35,16 @@ public class Shop extends AppCompatActivity {
         Button button_back = findViewById(R.id.button_back);
         Button button_buy_auto = findViewById(R.id.button_buy_auto);
         Button button_buy_multi = findViewById(R.id.button_buy_multi);
+        Button button_buy_grandma = findViewById(R.id.button_buy_grandma);
         TextView anzahl_auto = findViewById(R.id.anzahl_auto);
         TextView anzahl_multi = findViewById(R.id.anzahl_multi);
         TextView textView_counter_shop = findViewById(R.id.textView_counter_shop);
+        TextView anzahl_grandma = findViewById(R.id.anzahl_grandma);
 
         score = loadFile(digitsFromFile, FILE_SCORE);
         auto = loadFile(digitsFromFile, FILE_AUTO);
         multi = loadFile(digitsFromFile, FILE_MULTI);
+        grandma = loadFile(digitsFromFile, FILE_GRANDMA);
 
         int autoPreis = 100;
         int multiPreis = 20;
@@ -108,7 +113,25 @@ public class Shop extends AppCompatActivity {
             }
         });
 
+        button_buy_grandma.setOnClickListener(new View.OnClickListener(){
+            public void onClick(View v){
+                int inputAnzahlGrandma = Integer.parseInt(anzahl_grandma.getText().toString());
+                int buttenGrandmaText = Integer.parseInt(button_buy_grandma.getText().toString());
+                if(score >= buttenGrandmaText) {
+                    int x2 = purchaseUpgrade(inputAnzahlGrandma, buttenGrandmaText, score);
+                    anzahl_grandma.setText(String.valueOf(x2));
+                    grandma = x2;
+                    String test = button_buy_grandma.getText().toString();
+                    int y = Integer.parseInt(test) *2;
+                    button_buy_grandma.setText(String.valueOf(y));
+                    textView_counter_shop.setText((String.valueOf(score)));
+                }
+                saveAll();
+            }
+        });
+
     }
+    //TODO: Add feature to purchase upgrades - Autoclick and Multiplicator
     public int purchaseUpgrade(int input, int buttonText, int scoreInt){
         if(scoreInt >= buttonText){
             score = score - buttonText;
@@ -122,6 +145,7 @@ public class Shop extends AppCompatActivity {
         saveToFile(String.valueOf(score),FILE_SCORE);
         saveToFile(String.valueOf(auto),FILE_AUTO);
         saveToFile(String.valueOf(multi),FILE_MULTI);
+        saveToFile(String.valueOf(grandma), FILE_GRANDMA);
     }
 
     private void saveToFile(String data, String FILE){
@@ -129,6 +153,8 @@ public class Shop extends AppCompatActivity {
         try {
             fos = openFileOutput(FILE, MODE_PRIVATE);
             fos.write(data.getBytes());
+
+            Toast.makeText(this, "Saved to " + getFilesDir() + "/" + FILE, Toast.LENGTH_LONG).show();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
