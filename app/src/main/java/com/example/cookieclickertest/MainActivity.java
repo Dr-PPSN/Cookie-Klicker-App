@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.*;
 
 import java.io.BufferedReader;
@@ -32,11 +33,10 @@ public class MainActivity extends AppCompatActivity {
     public int cheat = 0;
     TextView textView_counter;
     TextView textView_counter2;
+    TextView billions_text;
 
     //TODO: New Shop Objects
-    //TODO: App Design
-    //TODO: remove both 0 when first time starting the app
-    //TODO: resize the animation of the cookie
+    //TODO: ads
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -48,6 +48,7 @@ public class MainActivity extends AppCompatActivity {
         Button button_reset = findViewById(R.id.button_reset);
         textView_counter = findViewById(R.id.textView_counter);
         textView_counter2 = findViewById(R.id.textView_counter2);
+        billions_text = findViewById(R.id.billions_text);
         ImageButton button_cookie = findViewById(R.id.button_cookie);
         auto = loadFile(digitsFromFile, FILE_AUTO);
         multi = loadFile(digitsFromFile, FILE_MULTI);
@@ -55,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
         textView_counter.setText(String.valueOf(loadFile(digitsFromFile, FILE_SCORE)));
         textView_counter2.setText(String.valueOf(loadFile(digitsFromFile, FILE_SCORE2)));
         clickvalue = calculateClickValue(clickvalue,multi);
+        button_cookie.setScaleX(1.0f);
+        button_cookie.setScaleY(1.0f);
 
         textView_counter.setOnClickListener(view -> {
             cheat++;
@@ -70,14 +73,16 @@ public class MainActivity extends AppCompatActivity {
             grandma = 0;
             textView_counter.setText(String.valueOf(0));
             textView_counter2.setText(String.valueOf(0));
+            billions_text.setVisibility(View.INVISIBLE);
+            textView_counter2.setVisibility(View.INVISIBLE);
             saveAll();
         });
 
         button_cookie.setOnTouchListener((v, event) -> {
             if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                button_cookie.animate().scaleX(1.2f).scaleY(1.2f).setDuration(300).start();
+                button_cookie.animate().scaleX(0.95f).scaleY(0.95f).setDuration(100).start();
             } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                button_cookie.animate().scaleX(0.8f).scaleY(0.8f).setDuration(300).start();
+                button_cookie.animate().scaleX(1.0f).scaleY(1.0f).setDuration(100).start();
             }
             return false;
         });
@@ -117,6 +122,10 @@ public class MainActivity extends AppCompatActivity {
                     grandmaHandler.postDelayed(this, delay);
                 }
             }, delay);
+        }
+        if (Integer.parseInt((String) textView_counter2.getText()) == 0){
+            billions_text.setVisibility(View.INVISIBLE);
+            textView_counter2.setVisibility(View.INVISIBLE);
         }
     }
     public void saveAll(){
@@ -191,67 +200,24 @@ public class MainActivity extends AppCompatActivity {
         return clickvalue;
     }
     @SuppressLint("SetTextI18n")
-    public void cookieClick(int autoClickValue){
+    public void cookieClick(int autoClickValue) {
         int score = Integer.parseInt((String) textView_counter.getText());
         TextView winGame_Text = findViewById(R.id.winGame_Text);
         //check if score is negative
-        if (score < 0){
+        if (score < 0) {
             winGame_Text.setText(WinGame_Text);
             textView_counter.setText(String.valueOf(999999999));//int max value = 2.000.000.000
             textView_counter2.setText(String.valueOf(999999999));
-        }
-        else {
+        } else {
             // increment the cookie counter each time the cookie button is clicked
-            if (score >= 9){
-                if (score >= 99){
-                    if (score >= 999){
-                        if (score >= 9999){ //9 TSD.
-                            if (score >= 99999){ //99 TSD.
-                                if (score >= 999999){ //999 TSD.
-                                    if (score >= 9999999){ //9 MIO.
-                                        if (score >= 99999999){ //99 MIO.
-                                            if (score >= 999999999){ //999 MIO.
-                                                textView_counter.setText(String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
-                                                score = Integer.parseInt((String) textView_counter.getText());
-                                                if (score > 999999998) {
-                                                    textView_counter2.setText(String.valueOf(Integer.parseInt((String) textView_counter2.getText()) + 1));
-                                                    textView_counter.setText(String.valueOf("000000000"));
-                                                }
-                                            }
-                                            else{
-                                                textView_counter.setText(String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
-                                            }
-                                        }
-                                        else {
-                                            textView_counter.setText("0" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
-                                        }
-                                    }
-                                    else {
-                                        textView_counter.setText("00" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
-                                    }
-                                }
-                                else {
-                                    textView_counter.setText("000" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
-                                }
-                            }
-                            else {
-                                textView_counter.setText("0000" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
-                            }
-                        }
-                        else {
-                            textView_counter.setText("00000" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
-                        }
-                    }
-                    else {
-                        textView_counter.setText("000000" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
-                    }
-                }
-                else {
-                    textView_counter.setText("0000000" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
-                }
-            }
-            else {
-                textView_counter.setText("00000000" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
+            if (score >= 999999999) { //999 MIO.
+                    billions_text.setVisibility(View.VISIBLE);
+                    textView_counter2.setVisibility(View.VISIBLE);
+                    textView_counter2.setText(String.valueOf(Integer.parseInt((String) textView_counter2.getText()) + 1));
+                    textView_counter.setText(String.valueOf(0));
+                    billions_text.setText("Billion");
+            } else {
+                textView_counter.setText(String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
             }
         }
     }

@@ -26,7 +26,7 @@ public class Shop extends AppCompatActivity {
     public int multi = 0;
     public int grandma = 0;
 
-    //TODO: If Anzahl_Click Multiplikator == 24 -> disable Buy_Multi Button
+    //TODO: If Anzahl_Click Multiplikator == 24 change to Billions
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

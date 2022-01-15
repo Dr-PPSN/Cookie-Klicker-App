@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">CookieClickerTest</string>
+    <string name="reset">Reset</string>
+    <string name="shop">Shop</string>
+    <string name="save">Save</string>
+    <string name="cookie">Cookie</string>
+    <string name="cookies">Cookies:</string>
+    <string name="_2500">2500</string>
+    <string name="_60">60</string>
+    <string name="click_multiplikator">Click Multiplikator</string>
+    <string name="_1000">1000</string>
+    <string name="auto_clicker">Auto-Clicker</string>
+    <string name="back">Back</string>
+    <string name="grandma">Grandma</string>
+    <string name="_0">0</string>
 </resources>
