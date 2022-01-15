@@ -5,10 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
@@ -27,6 +25,8 @@ public class Shop extends AppCompatActivity {
     public int auto = 0;
     public int multi = 0;
     public int grandma = 0;
+
+    //TODO: If Anzahl_Click Multiplikator == 24 -> disable Buy_Multi Button
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,86 +59,69 @@ public class Shop extends AppCompatActivity {
             for (int i = 0; i < auto; i++){
                 autoPreis = autoPreis * 3;
             }
-            button_buy_auto.setText(String.valueOf(autoPreis));
         }
-        else {
-            button_buy_auto.setText(String.valueOf(autoPreis));
-        }
+        button_buy_auto.setText(String.valueOf(autoPreis));
         if (multi != 0){
             for (int i = 0; i < multi; i++){
                 multiPreis = multiPreis * 2;
             }
-            button_buy_multi.setText(String.valueOf(multiPreis));
         }
-        else {
-            button_buy_multi.setText(String.valueOf(multiPreis));
-        }
+        button_buy_multi.setText(String.valueOf(multiPreis));
         if (grandma != 0){
             for (int i = 0; i < grandma; i++){
                 grandmaPreis = grandmaPreis * 2;
             }
-            button_buy_grandma.setText(String.valueOf(grandmaPreis));
         }
-        else {
-            button_buy_grandma.setText(String.valueOf(grandmaPreis));
-        }
+        button_buy_grandma.setText(String.valueOf(grandmaPreis));
 
-        button_back.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // save the current cookie counter value to external file
-                startActivity(new Intent(Shop.this, MainActivity.class));
-            }
+        button_back.setOnClickListener(v -> {
+            // save the current cookie counter value to external file
+            startActivity(new Intent(Shop.this, MainActivity.class));
         });
 
-        button_buy_auto.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                int inputAnzahlAuto = Integer.parseInt(anzahl_auto.getText().toString());
-                int buttenAutoText = Integer.parseInt(button_buy_auto.getText().toString());
-                if(score >= buttenAutoText) {
-                    int x1 = purchaseUpgrade(inputAnzahlAuto, buttenAutoText, score);
-                    anzahl_auto.setText(String.valueOf(x1));
-                    auto = x1;
-                    String test = button_buy_auto.getText().toString();
-                    int y = Integer.parseInt(test) *3;
-                    button_buy_auto.setText(String.valueOf(y));
-                    textView_counter_shop.setText((String.valueOf(score)));
-                }
-                saveAll();
+        button_buy_auto.setOnClickListener(v -> {
+            int inputAnzahlAuto = Integer.parseInt(anzahl_auto.getText().toString());
+            int buttenAutoText = Integer.parseInt(button_buy_auto.getText().toString());
+            if(score >= buttenAutoText) {
+                int x1 = purchaseUpgrade(inputAnzahlAuto, buttenAutoText, score);
+                anzahl_auto.setText(String.valueOf(x1));
+                auto = x1;
+                String test = button_buy_auto.getText().toString();
+                int y = Integer.parseInt(test) *3;
+                button_buy_auto.setText(String.valueOf(y));
+                textView_counter_shop.setText((String.valueOf(score)));
             }
+            saveAll();
         });
 
-        button_buy_multi.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                int inputAnzahlMulti = Integer.parseInt(anzahl_multi.getText().toString());
-                int buttenMultiText = Integer.parseInt(button_buy_multi.getText().toString());
-                if(score >= buttenMultiText) {
-                    int x2 = purchaseUpgrade(inputAnzahlMulti, buttenMultiText, score);
-                    anzahl_multi.setText(String.valueOf(x2));
-                    multi = x2;
-                    String test = button_buy_multi.getText().toString();
-                    int y = Integer.parseInt(test) *2;
-                    button_buy_multi.setText(String.valueOf(y));
-                    textView_counter_shop.setText((String.valueOf(score)));
-                }
-                saveAll();
+        button_buy_multi.setOnClickListener(v -> {
+            int inputAnzahlMulti = Integer.parseInt(anzahl_multi.getText().toString());
+            int buttenMultiText = Integer.parseInt(button_buy_multi.getText().toString());
+            if(score >= buttenMultiText) {
+                int x2 = purchaseUpgrade(inputAnzahlMulti, buttenMultiText, score);
+                anzahl_multi.setText(String.valueOf(x2));
+                multi = x2;
+                String test = button_buy_multi.getText().toString();
+                int y = Integer.parseInt(test) *2;
+                button_buy_multi.setText(String.valueOf(y));
+                textView_counter_shop.setText((String.valueOf(score)));
             }
+            saveAll();
         });
 
-        button_buy_grandma.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
-                int inputAnzahlGrandma = Integer.parseInt(anzahl_grandma.getText().toString());
-                int buttenGrandmaText = Integer.parseInt(button_buy_grandma.getText().toString());
-                if(score >= buttenGrandmaText) {
-                    int x3 = purchaseUpgrade(inputAnzahlGrandma, buttenGrandmaText, score);
-                    anzahl_grandma.setText(String.valueOf(x3));
-                    grandma = x3;
-                    String test = button_buy_grandma.getText().toString();
-                    int y = Integer.parseInt(test) *2;
-                    button_buy_grandma.setText(String.valueOf(y));
-                    textView_counter_shop.setText((String.valueOf(score)));
-                }
-                saveAll();
+        button_buy_grandma.setOnClickListener(v -> {
+            int inputAnzahlGrandma = Integer.parseInt(anzahl_grandma.getText().toString());
+            int buttenGrandmaText = Integer.parseInt(button_buy_grandma.getText().toString());
+            if(score >= buttenGrandmaText) {
+                int x3 = purchaseUpgrade(inputAnzahlGrandma, buttenGrandmaText, score);
+                anzahl_grandma.setText(String.valueOf(x3));
+                grandma = x3;
+                String test = button_buy_grandma.getText().toString();
+                int y = Integer.parseInt(test) *2;
+                button_buy_grandma.setText(String.valueOf(y));
+                textView_counter_shop.setText((String.valueOf(score)));
             }
+            saveAll();
         });
 
     }
@@ -163,11 +146,9 @@ public class Shop extends AppCompatActivity {
         try {
             fos = openFileOutput(FILE, MODE_PRIVATE);
             fos.write(data.getBytes());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
-        }finally {
+        } finally {
             if (fos!=null){
                 try {
                     fos.close();
@@ -192,7 +173,7 @@ public class Shop extends AppCompatActivity {
             }
             //textView_counter.setText(sb.toString());
             Log.i("loadFile()","msg: " + sb.toString());
-            digitFromFile = Integer.valueOf(sb.toString());
+            digitFromFile = Integer.parseInt(sb.toString());
             return digitFromFile;
 
         } catch (FileNotFoundException e) {

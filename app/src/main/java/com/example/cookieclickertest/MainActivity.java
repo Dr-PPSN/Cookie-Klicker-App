@@ -2,12 +2,12 @@ package com.example.cookieclickertest;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.*;
 
 import java.io.BufferedReader;
@@ -19,9 +19,11 @@ import java.io.InputStreamReader;
 
 public class MainActivity extends AppCompatActivity {
     private static final String FILE_SCORE = "score.txt";
+    private static final String FILE_SCORE2 = "score2.txt";
     private static final String FILE_AUTO = "auto.txt";
     private static final String FILE_MULTI = "multi.txt";
     private static final String FILE_GRANDMA = "grandma.txt";
+    public String WinGame_Text = "Congratulations, you won the game!";
     public int digitsFromFile = 0;
     public int auto = 0;
     public int multi = 0;
@@ -29,10 +31,14 @@ public class MainActivity extends AppCompatActivity {
     public int grandma = 0;
     public int cheat = 0;
     TextView textView_counter;
+    TextView textView_counter2;
 
     //TODO: New Shop Objects
     //TODO: App Design
+    //TODO: remove both 0 when first time starting the app
+    //TODO: resize the animation of the cookie
 
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,64 +47,52 @@ public class MainActivity extends AppCompatActivity {
         Button button_Shop = findViewById(R.id.button_Shop);
         Button button_reset = findViewById(R.id.button_reset);
         textView_counter = findViewById(R.id.textView_counter);
+        textView_counter2 = findViewById(R.id.textView_counter2);
         ImageButton button_cookie = findViewById(R.id.button_cookie);
         auto = loadFile(digitsFromFile, FILE_AUTO);
         multi = loadFile(digitsFromFile, FILE_MULTI);
         grandma = loadFile(digitsFromFile, FILE_GRANDMA);
-        String zwichenString = String.valueOf(loadFile(digitsFromFile, FILE_SCORE));
-        textView_counter.setText(zwichenString);
+        textView_counter.setText(String.valueOf(loadFile(digitsFromFile, FILE_SCORE)));
+        textView_counter2.setText(String.valueOf(loadFile(digitsFromFile, FILE_SCORE2)));
         clickvalue = calculateClickValue(clickvalue,multi);
 
-        textView_counter.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                cheat++;
-                if (cheat == 3){
-                    textView_counter.setText(String.valueOf(Integer.valueOf((String) textView_counter.getText())+(10000)));
-                    cheat = 0;
-                }
+        textView_counter.setOnClickListener(view -> {
+            cheat++;
+            if (cheat == 3){
+                textView_counter.setText(String.valueOf(Integer.parseInt((String) textView_counter.getText())+(999999998)));
+                cheat = 0;
             }
         });
 
-        button_reset.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                auto = 0;
-                multi = 0;
-                grandma = 0;
-                textView_counter.setText(String.valueOf(0));
-                saveAll();
-            }
+        button_reset.setOnClickListener(view -> {
+            auto = 0;
+            multi = 0;
+            grandma = 0;
+            textView_counter.setText(String.valueOf(0));
+            textView_counter2.setText(String.valueOf(0));
+            saveAll();
         });
 
-        button_cookie.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent event) {
-                if(event.getAction() == MotionEvent.ACTION_DOWN) {
-                    button_cookie.animate().scaleX(1.2f).scaleY(1.2f).setDuration(300).start();
-                } else if (event.getAction() == MotionEvent.ACTION_UP) {
-                    button_cookie.animate().scaleX(0.8f).scaleY(0.8f).setDuration(300).start();
-                }
-                return false;
+        button_cookie.setOnTouchListener((v, event) -> {
+            if(event.getAction() == MotionEvent.ACTION_DOWN) {
+                button_cookie.animate().scaleX(1.2f).scaleY(1.2f).setDuration(300).start();
+            } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                button_cookie.animate().scaleX(0.8f).scaleY(0.8f).setDuration(300).start();
             }
+            return false;
         });
 
-        button_cookie.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                int manualyClick = 1;
-                cookieClick(manualyClick);
-            }
+        button_cookie.setOnClickListener(v -> {
+            int manualyClick = 1;
+            cookieClick(manualyClick);
         });
 
-        button_save.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                saveAll();
-            }
-        });
-        button_Shop.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                // save the current cookie counter value to external file
-                saveAll();
-                Intent intent = new Intent(MainActivity.this, Shop.class);
-                startActivity(intent);
-            }
+        button_save.setOnClickListener(v -> saveAll());
+        button_Shop.setOnClickListener(v -> {
+            // save the current cookie counter value to external file
+            saveAll();
+            Intent intent = new Intent(MainActivity.this, Shop.class);
+            startActivity(intent);
         });
 
         if (auto > 0) {
@@ -126,8 +120,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
     public void saveAll(){
-        String data = String.valueOf(textView_counter.getText());
-        saveToFile(data,FILE_SCORE);
+        String score1 = String.valueOf(textView_counter.getText());
+        String score2 = String.valueOf(textView_counter2.getText());
+        saveToFile(score1,FILE_SCORE);
+        saveToFile(score2,FILE_SCORE2);
         saveToFile(String.valueOf(auto),FILE_AUTO);
         saveToFile(String.valueOf(multi),FILE_MULTI);
         saveToFile(String.valueOf(grandma), FILE_GRANDMA);
@@ -165,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
             }
             //textView_counter.setText(sb.toString());
             Log.i("loadFile()","msg: " + sb.toString());
-            digitFromFile = Integer.valueOf(sb.toString());
+            digitFromFile = Integer.parseInt(sb.toString());
             return digitFromFile;
 
         } catch (FileNotFoundException e) {
@@ -194,20 +190,73 @@ public class MainActivity extends AppCompatActivity {
         }
         return clickvalue;
     }
+    @SuppressLint("SetTextI18n")
     public void cookieClick(int autoClickValue){
-        // increment the cookie counter by 1 each time the cookie button is clicked
-        textView_counter.setText(String.valueOf(Integer.valueOf((String) textView_counter.getText())+(clickvalue*autoClickValue)));
+        int score = Integer.parseInt((String) textView_counter.getText());
+        TextView winGame_Text = findViewById(R.id.winGame_Text);
+        //check if score is negative
+        if (score < 0){
+            winGame_Text.setText(WinGame_Text);
+            textView_counter.setText(String.valueOf(999999999));//int max value = 2.000.000.000
+            textView_counter2.setText(String.valueOf(999999999));
+        }
+        else {
+            // increment the cookie counter each time the cookie button is clicked
+            if (score >= 9){
+                if (score >= 99){
+                    if (score >= 999){
+                        if (score >= 9999){ //9 TSD.
+                            if (score >= 99999){ //99 TSD.
+                                if (score >= 999999){ //999 TSD.
+                                    if (score >= 9999999){ //9 MIO.
+                                        if (score >= 99999999){ //99 MIO.
+                                            if (score >= 999999999){ //999 MIO.
+                                                textView_counter.setText(String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
+                                                score = Integer.parseInt((String) textView_counter.getText());
+                                                if (score > 999999998) {
+                                                    textView_counter2.setText(String.valueOf(Integer.parseInt((String) textView_counter2.getText()) + 1));
+                                                    textView_counter.setText(String.valueOf("000000000"));
+                                                }
+                                            }
+                                            else{
+                                                textView_counter.setText(String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
+                                            }
+                                        }
+                                        else {
+                                            textView_counter.setText("0" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
+                                        }
+                                    }
+                                    else {
+                                        textView_counter.setText("00" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
+                                    }
+                                }
+                                else {
+                                    textView_counter.setText("000" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
+                                }
+                            }
+                            else {
+                                textView_counter.setText("0000" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
+                            }
+                        }
+                        else {
+                            textView_counter.setText("00000" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
+                        }
+                    }
+                    else {
+                        textView_counter.setText("000000" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
+                    }
+                }
+                else {
+                    textView_counter.setText("0000000" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
+                }
+            }
+            else {
+                textView_counter.setText("00000000" + String.valueOf(Integer.parseInt((String) textView_counter.getText()) + (clickvalue * autoClickValue)));
+            }
+        }
     }
     public void grandmaFunctionality(int grandma){
         int grandmaValue = 50 * grandma;
-        textView_counter.setText(String.valueOf(Integer.valueOf((String) textView_counter.getText())+(grandmaValue)));
-    }
-    public void buttonGross(){
-        ImageButton button_cookie = findViewById(R.id.button_cookie);
-        button_cookie.animate().scaleX(1.2f).scaleY(1.2f).setDuration(300).start();
-    }
-    public void buttonKlein(){
-        ImageButton button_cookie = findViewById(R.id.button_cookie);
-        button_cookie.animate().scaleX(0.8f).scaleY(0.8f).setDuration(300).start();
+        textView_counter.setText(String.valueOf(Integer.parseInt((String) textView_counter.getText())+(grandmaValue)));
     }
 }
