@@ -18,13 +18,15 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.MobileAds;
+
 public class MainActivity extends AppCompatActivity {
     private static final String FILE_SCORE = "score.txt";
     private static final String FILE_SCORE2 = "score2.txt";
     private static final String FILE_AUTO = "auto.txt";
     private static final String FILE_MULTI = "multi.txt";
     private static final String FILE_GRANDMA = "grandma.txt";
-    public String WinGame_Text = "Congratulations, you won the game!";
     public int digitsFromFile = 0;
     public int auto = 0;
     public int multi = 0;
@@ -34,11 +36,13 @@ public class MainActivity extends AppCompatActivity {
     TextView textView_counter;
     TextView textView_counter2;
     TextView billions_text;
+    com.google.android.gms.ads.AdView mAdView;
 
-    //TODO: New Shop Objects
-    //TODO: ads
+    //TODO: third activity to Reset app, toggle auto-save and a "about" about the dev´s and the app
+    //TODO: button in Shop activity to get Cookies after watching a 30 sec Ad
+    //TODO: maybe better design and colors (add colors in res/values/colors.xml)
 
-    @SuppressLint("ClickableViewAccessibility")
+    @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -127,6 +131,16 @@ public class MainActivity extends AppCompatActivity {
             billions_text.setVisibility(View.INVISIBLE);
             textView_counter2.setVisibility(View.INVISIBLE);
         }
+
+        //initialize mobile ads----------->
+        MobileAds.initialize(this, initializationStatus -> {
+        });
+        AdRequest adRequest = new AdRequest.Builder().build();
+        //<--------------
+        //Ad Top Banner------------->
+        mAdView = findViewById(R.id.adViewBottomBanner);
+        mAdView.loadAd(adRequest);
+        //<-------------
     }
     public void saveAll(){
         String score1 = String.valueOf(textView_counter.getText());
@@ -202,10 +216,8 @@ public class MainActivity extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     public void cookieClick(int autoClickValue) {
         int score = Integer.parseInt((String) textView_counter.getText());
-        TextView winGame_Text = findViewById(R.id.winGame_Text);
         //check if score is negative
         if (score < 0) {
-            winGame_Text.setText(WinGame_Text);
             textView_counter.setText(String.valueOf(999999999));//int max value = 2.000.000.000
             textView_counter2.setText(String.valueOf(999999999));
         } else {

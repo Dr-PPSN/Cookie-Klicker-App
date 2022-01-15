@@ -13,8 +13,9 @@
         android:id="@+id/button_cookie"
         android:layout_width="286dp"
         android:layout_height="294dp"
-        android:backgroundTint="#00FFFFFF"
         android:adjustViewBounds="true"
+        android:backgroundTint="#00FFFFFF"
+        android:contentDescription="@string/cookie"
         android:scaleType="centerInside"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -22,8 +23,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/cookie_transparent"
-        tools:ignore="SpeakableTextPresentCheck"
-        android:contentDescription="@string/cookie" />
+        tools:ignore="SpeakableTextPresentCheck" />
     <!--Img src: https://www.freepngs.com/cookie-pngs?pgid=iwhpyd6e-2bb8ecaf-5461-11e8-a9ff-063f49e9a7e4-->
 
     <TextView
@@ -34,6 +34,7 @@
         android:maxLength="10"
         android:textSize="24sp"
         android:textColor="@color/black"
+        android:text="@string/_0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -42,23 +43,21 @@
         android:id="@+id/button_save"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="60dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/save"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/adViewBottomBanner"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/button_reset"
+        app:layout_constraintTop_toBottomOf="@+id/button_cookie" />
 
     <Button
         android:id="@+id/button_Shop"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginBottom="16dp"
         android:text="@string/shop"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintBottom_toTopOf="@+id/adViewBottomBanner"
+        app:layout_constraintEnd_toStartOf="@+id/button_reset"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_cookie" />
 
     <Button
         android:id="@+id/button_reset"
@@ -66,24 +65,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="100dp"
         android:text="@string/reset"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/winGame_Text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        app:layout_constraintBottom_toTopOf="@+id/button_cookie"
+        app:layout_constraintBottom_toTopOf="@+id/adViewBottomBanner"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintTop_toBottomOf="@+id/button_cookie" />
 
     <TextView
         android:id="@+id/textView_counter2"
@@ -91,12 +77,12 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:maxLength="10"
+        android:text="@string/_0"
+        android:textColor="@color/black"
         android:textDirection="rtl"
         android:textSize="24sp"
-        android:textColor="@color/black"
         app:layout_constraintBottom_toTopOf="@+id/button_cookie"
-        app:layout_constraintEnd_toEndOf="@+id/textView_counter"
-        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintEnd_toStartOf="@+id/billions_text"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -117,11 +103,28 @@
         android:id="@+id/billions_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
+        android:layout_marginEnd="32dp"
+        android:text="@string/billion"
         android:textColor="@color/black"
+        android:textSize="24sp"
         app:layout_constraintBottom_toTopOf="@+id/button_cookie"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/textView_counter2"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.gms.ads.AdView
+        android:id="@+id/adViewBottomBanner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:visibility="visible"
+        app:adSize="BANNER"
+        app:adUnitId="ca-app-pub-3940256099942544/6300978111"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.491"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

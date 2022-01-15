@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -17,16 +18,19 @@ import java.io.InputStreamReader;
 
 public class Shop extends AppCompatActivity {
     private static final String FILE_SCORE = "score.txt";
+    private static final String FILE_SCORE2 = "score2.txt";
     private static final String FILE_AUTO = "auto.txt";
     private static final String FILE_MULTI = "multi.txt";
     private static final String FILE_GRANDMA = "grandma.txt";
     public int digitsFromFile = 0;
     public int score = 0;
+    public int score2 = 0;
     public int auto = 0;
     public int multi = 0;
     public int grandma = 0;
 
-    //TODO: If Anzahl_Click Multiplikator == 24 change to Billions
+    //TODO: 2 or 3 New Shop Objects to buy with Billions
+    //TODO: button to get Cookies after watching a 30 sec Ad
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +44,10 @@ public class Shop extends AppCompatActivity {
         TextView anzahl_multi = findViewById(R.id.anzahl_multi);
         TextView textView_counter_shop = findViewById(R.id.textView_counter_shop);
         TextView anzahl_grandma = findViewById(R.id.anzahl_grandma);
+        TextView billions_text2 = findViewById(R.id.billion_text2);
 
         score = loadFile(digitsFromFile, FILE_SCORE);
+        score2 = loadFile(digitsFromFile, FILE_SCORE2);
         auto = loadFile(digitsFromFile, FILE_AUTO);
         multi = loadFile(digitsFromFile, FILE_MULTI);
         grandma = loadFile(digitsFromFile, FILE_GRANDMA);
@@ -49,6 +55,7 @@ public class Shop extends AppCompatActivity {
         int autoPreis = 1000;
         int multiPreis = 60;
         int grandmaPreis = 2500;
+        Boolean checkIfBillion = false;
 
         textView_counter_shop.setText((String.valueOf(score)));
         anzahl_auto.setText(String.valueOf(auto));
@@ -72,6 +79,18 @@ public class Shop extends AppCompatActivity {
                 grandmaPreis = grandmaPreis * 2;
             }
         }
+        if (score2 != 0){
+            billions_text2.setVisibility(View.VISIBLE);
+            textView_counter_shop.setText((String.valueOf(score2)));
+            checkIfBillion = true;
+            button_buy_auto.setEnabled(false);
+            button_buy_multi.setEnabled(false);
+            button_buy_grandma.setEnabled(false);
+        }
+        else {
+            billions_text2.setVisibility(View.INVISIBLE);
+            checkIfBillion = false;
+        }
         button_buy_grandma.setText(String.valueOf(grandmaPreis));
 
         button_back.setOnClickListener(v -> {
@@ -79,18 +98,19 @@ public class Shop extends AppCompatActivity {
             startActivity(new Intent(Shop.this, MainActivity.class));
         });
 
+        Boolean finalCheckIfBillion = checkIfBillion;
         button_buy_auto.setOnClickListener(v -> {
             int inputAnzahlAuto = Integer.parseInt(anzahl_auto.getText().toString());
             int buttenAutoText = Integer.parseInt(button_buy_auto.getText().toString());
-            if(score >= buttenAutoText) {
-                int x1 = purchaseUpgrade(inputAnzahlAuto, buttenAutoText, score);
-                anzahl_auto.setText(String.valueOf(x1));
-                auto = x1;
-                String test = button_buy_auto.getText().toString();
-                int y = Integer.parseInt(test) *3;
-                button_buy_auto.setText(String.valueOf(y));
-                textView_counter_shop.setText((String.valueOf(score)));
-            }
+                if(score >= buttenAutoText) {
+                    int x1 = purchaseUpgrade(inputAnzahlAuto, buttenAutoText, score);
+                    anzahl_auto.setText(String.valueOf(x1));
+                    auto = x1;
+                    String test = button_buy_auto.getText().toString();
+                    int y = Integer.parseInt(test) *3;
+                    button_buy_auto.setText(String.valueOf(y));
+                    textView_counter_shop.setText((String.valueOf(score)));
+                }
             saveAll();
         });
 
@@ -98,29 +118,29 @@ public class Shop extends AppCompatActivity {
             int inputAnzahlMulti = Integer.parseInt(anzahl_multi.getText().toString());
             int buttenMultiText = Integer.parseInt(button_buy_multi.getText().toString());
             if(score >= buttenMultiText) {
-                int x2 = purchaseUpgrade(inputAnzahlMulti, buttenMultiText, score);
-                anzahl_multi.setText(String.valueOf(x2));
-                multi = x2;
-                String test = button_buy_multi.getText().toString();
-                int y = Integer.parseInt(test) *2;
-                button_buy_multi.setText(String.valueOf(y));
-                textView_counter_shop.setText((String.valueOf(score)));
-            }
+                    int x2 = purchaseUpgrade(inputAnzahlMulti, buttenMultiText, score);
+                    anzahl_multi.setText(String.valueOf(x2));
+                    multi = x2;
+                    String test = button_buy_multi.getText().toString();
+                    int y = Integer.parseInt(test) *2;
+                    button_buy_multi.setText(String.valueOf(y));
+                    textView_counter_shop.setText((String.valueOf(score)));
+                }
             saveAll();
         });
 
         button_buy_grandma.setOnClickListener(v -> {
             int inputAnzahlGrandma = Integer.parseInt(anzahl_grandma.getText().toString());
-            int buttenGrandmaText = Integer.parseInt(button_buy_grandma.getText().toString());
-            if(score >= buttenGrandmaText) {
-                int x3 = purchaseUpgrade(inputAnzahlGrandma, buttenGrandmaText, score);
-                anzahl_grandma.setText(String.valueOf(x3));
-                grandma = x3;
-                String test = button_buy_grandma.getText().toString();
-                int y = Integer.parseInt(test) *2;
-                button_buy_grandma.setText(String.valueOf(y));
-                textView_counter_shop.setText((String.valueOf(score)));
-            }
+                int buttenGrandmaText = Integer.parseInt(button_buy_grandma.getText().toString());
+                if (score >= buttenGrandmaText) {
+                    int x3 = purchaseUpgrade(inputAnzahlGrandma, buttenGrandmaText, score);
+                    anzahl_grandma.setText(String.valueOf(x3));
+                    grandma = x3;
+                    String test = button_buy_grandma.getText().toString();
+                    int y = Integer.parseInt(test) * 2;
+                    button_buy_grandma.setText(String.valueOf(y));
+                    textView_counter_shop.setText((String.valueOf(score)));
+                }
             saveAll();
         });
 

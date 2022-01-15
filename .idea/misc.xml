@@ -10,8 +10,11 @@
         <entry key="..\:/Users/user/Desktop/Android/Cookie-Klicker-App/app/src/main/res/drawable/ic_launcher_background.xml" value="0.4140625" />
         <entry key="..\:/Users/user/Desktop/Android/Cookie-Klicker-App/app/src/main/res/drawable/main_header_selector.xml" value="0.4140625" />
         <entry key="..\:/Users/user/Desktop/Android/Cookie-Klicker-App/app/src/main/res/drawable/roundcorner.xml" value="0.4140625" />
-        <entry key="..\:/Users/user/Desktop/Android/Cookie-Klicker-App/app/src/main/res/layout/activity_main.xml" value="0.4" />
-        <entry key="..\:/Users/user/Desktop/Android/Cookie-Klicker-App/app/src/main/res/layout/activity_shop.xml" value="0.4" />
+        <entry key="..\:/Users/user/Desktop/Android/Cookie-Klicker-App/app/src/main/res/layout/activity_main.xml" value="0.2" />
+        <entry key="..\:/Users/user/Desktop/Android/Cookie-Klicker-App/app/src/main/res/layout/activity_shop.xml" value="0.72" />
+        <entry key="..\:/Users/user/Desktop/Android/Cookie-Klicker-App/app/src/main/res/layout/navigation_drawer_layout.xml" value="0.39375" />
+        <entry key="..\:/Users/user/Desktop/Android/Cookie-Klicker-App/app/src/main/res/layout/right_drawer_fragment.xml" value="0.39375" />
+        <entry key="..\:/Users/user/Desktop/Android/Cookie-Klicker-App/app/src/main/res/layout/side_menu.xml" value="0.39375" />
       </map>
     </option>
   </component>

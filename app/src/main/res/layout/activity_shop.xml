@@ -68,7 +68,6 @@
         android:layout_marginEnd="8dp"
         android:hapticFeedbackEnabled="true"
         android:text="@string/_1000"
-        android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/anzahl_auto"
         app:layout_constraintTop_toTopOf="parent" />
@@ -132,7 +131,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="175dp"
-        android:text="0"
+        android:text="@string/_0"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -144,7 +143,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="90dp"
-        android:text="0"
+        android:text="@string/_0"
         android:textColor="#000000"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -158,7 +157,7 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="16dp"
         android:text="@string/cookies"
-        android:textColor="#8A4C1D"
+        android:textColor="@color/cookie_brown"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/anzahl_auto"
@@ -170,10 +169,21 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
         android:text="@string/_0"
-        android:textColor="#8A4C1D"
+        android:textColor="@color/cookie_brown"
         android:textSize="16sp"
         app:layout_constraintBottom_toBottomOf="@+id/textView3"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/anzahl_auto" />
+
+    <TextView
+        android:id="@+id/billion_text2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/billion"
+        android:textColor="@color/cookie_brown"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/textView_counter_shop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/textView_counter_shop" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
