@@ -55,7 +55,6 @@ public class Shop extends AppCompatActivity {
         int autoPreis = 1000;
         int multiPreis = 60;
         int grandmaPreis = 2500;
-        Boolean checkIfBillion = false;
 
         textView_counter_shop.setText((String.valueOf(score)));
         anzahl_auto.setText(String.valueOf(auto));
@@ -82,14 +81,12 @@ public class Shop extends AppCompatActivity {
         if (score2 != 0){
             billions_text2.setVisibility(View.VISIBLE);
             textView_counter_shop.setText((String.valueOf(score2)));
-            checkIfBillion = true;
             button_buy_auto.setEnabled(false);
             button_buy_multi.setEnabled(false);
             button_buy_grandma.setEnabled(false);
         }
         else {
             billions_text2.setVisibility(View.INVISIBLE);
-            checkIfBillion = false;
         }
         button_buy_grandma.setText(String.valueOf(grandmaPreis));
 
@@ -98,7 +95,6 @@ public class Shop extends AppCompatActivity {
             startActivity(new Intent(Shop.this, MainActivity.class));
         });
 
-        Boolean finalCheckIfBillion = checkIfBillion;
         button_buy_auto.setOnClickListener(v -> {
             int inputAnzahlAuto = Integer.parseInt(anzahl_auto.getText().toString());
             int buttenAutoText = Integer.parseInt(button_buy_auto.getText().toString());
