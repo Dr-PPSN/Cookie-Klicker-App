@@ -31,6 +31,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String FILE_AUTO = "auto.txt";
     private static final String FILE_MULTI = "multi.txt";
     private static final String FILE_GRANDMA = "grandma.txt";
+    private static final String FILE_BAKERY = "bakery.txt";
+    private static final String FILE_FACTORY = "factory.txt";
     private static final String FILE_SOUND = "sound.txt";
     private static final String FILE_MUSIC = "music.txt";
     private static final String FILE_VIB = "vib.txt";
@@ -41,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
     public int multi = 0;
     public int clickvalue = 1;
     public int grandma = 0;
+    public int bakery = 0;
+    public int factory = 0;
     public int cheat = 0;
     public int soundCheck = 1;
     public int music = 1;
@@ -67,6 +71,8 @@ public class MainActivity extends AppCompatActivity {
         auto = loadFile(digitsFromFile, FILE_AUTO);
         multi = loadFile(digitsFromFile, FILE_MULTI);
         grandma = loadFile(digitsFromFile, FILE_GRANDMA);
+        bakery = loadFile(digitsFromFile, FILE_BAKERY);
+        factory = loadFile(digitsFromFile, FILE_FACTORY);
         soundCheck = loadFile(1, FILE_SOUND);
         music = loadFile(1, FILE_MUSIC);
         vib = loadFile(1, FILE_VIB);
@@ -138,13 +144,15 @@ public class MainActivity extends AppCompatActivity {
             }, delay);
         }
 
-        if (grandma > 0){
+        if (grandma > 0 || bakery > 0 || factory > 0){
             final Handler grandmaHandler = new Handler();
             final int delay = 1000;
 
             grandmaHandler.postDelayed(new Runnable(){
                 public void run() {
                     grandmaFunctionality(grandma);
+                    backeryFunctionality(bakery);
+                    factoryFunctionality(factory);
                     grandmaHandler.postDelayed(this, delay);
                 }
             }, delay);
@@ -182,6 +190,7 @@ public class MainActivity extends AppCompatActivity {
         saveToFile(String.valueOf(auto),FILE_AUTO);
         saveToFile(String.valueOf(multi),FILE_MULTI);
         saveToFile(String.valueOf(grandma), FILE_GRANDMA);
+        saveToFile(String.valueOf(bakery), FILE_BAKERY);
     }
 
     private void saveToFile(String data, String FILE){
@@ -268,6 +277,14 @@ public class MainActivity extends AppCompatActivity {
     public void grandmaFunctionality(int grandma){
         int grandmaValue = 50 * grandma;
         textView_counter.setText(String.valueOf(Integer.parseInt((String) textView_counter.getText())+(grandmaValue)));
+    }
+    public void backeryFunctionality(int bakery){
+        int bakeryValue = 100000 * bakery;
+        textView_counter.setText(String.valueOf(Integer.parseInt((String) textView_counter.getText())+(bakeryValue)));
+    }
+    public void factoryFunctionality(int factory){
+        int factoryValue = 1000000 * factory;
+        textView_counter.setText(String.valueOf(Integer.parseInt((String) textView_counter.getText())+(factoryValue)));
     }
     public void playBackgroundMusic(int id){
         mediaPlayerMusic = MediaPlayer.create(MainActivity.this, id);

@@ -8,6 +8,18 @@
     tools:context=".Shop">
 
     <TextView
+        android:id="@+id/anzahl_factory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:text="@string/_0"
+        android:textSize="16sp"
+        android:textColor="#000000"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/anzahl_bakery" />
+
+    <TextView
         android:id="@+id/anzahl_bakery"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -44,6 +56,20 @@
         app:layout_constraintEnd_toStartOf="@+id/anzahl_multi"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/textViewFactory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="90dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/bakery"
+        android:textColor="#000000"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/anzahl_bakery"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewBakery" />
 
     <TextView
         android:id="@+id/textViewBakery"
@@ -84,6 +110,21 @@
         app:layout_constraintEnd_toStartOf="@+id/anzahl_auto"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/button_buy_factory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="66dp"
+        android:layout_marginEnd="8dp"
+        android:hapticFeedbackEnabled="true"
+        android:text="@string/_1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.474"
+        app:layout_constraintStart_toEndOf="@+id/anzahl_bakery"
+        app:layout_constraintTop_toBottomOf="@+id/button_buy_bakery" />
+
 
     <Button
         android:id="@+id/button_buy_bakery"

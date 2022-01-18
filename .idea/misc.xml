@@ -3,16 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/Kai Rohrpasser/Desktop/Android/Cookie Klicker App/app/src/main/res/drawable/click_sound_off.xml" value="0.15462962962962962" />
-        <entry key="..\:/Users/Kai Rohrpasser/Desktop/Android/Cookie Klicker App/app/src/main/res/drawable/click_sound_on.xml" value="0.21614583333333334" />
-        <entry key="..\:/Users/Kai Rohrpasser/Desktop/Android/Cookie Klicker App/app/src/main/res/drawable/music_off.xml" value="0.15462962962962962" />
-        <entry key="..\:/Users/Kai Rohrpasser/Desktop/Android/Cookie Klicker App/app/src/main/res/drawable/music_on.xml" value="0.15462962962962962" />
-        <entry key="..\:/Users/Kai Rohrpasser/Desktop/Android/Cookie Klicker App/app/src/main/res/drawable/settings.xml" value="0.21614583333333334" />
-        <entry key="..\:/Users/Kai Rohrpasser/Desktop/Android/Cookie Klicker App/app/src/main/res/drawable/vib.xml" value="0.1527777777777778" />
         <entry key="..\:/Users/Kai Rohrpasser/Desktop/Android/Cookie Klicker App/app/src/main/res/layout/activity_main.xml" value="0.22" />
-        <entry key="..\:/Users/Kai Rohrpasser/Desktop/Android/Cookie Klicker App/app/src/main/res/layout/activity_settings.xml" value="0.22" />
         <entry key="..\:/Users/Kai Rohrpasser/Desktop/Android/Cookie Klicker App/app/src/main/res/layout/activity_shop.xml" value="0.22" />
-        <entry key="..\:/Users/Kira/StudioProjects/Cookie-Klicker-App/app/src/main/res/layout/activity_shop.xml" value="0.490036231884058" />
+        <entry key="..\:/Users/Property-Soft/Desktop/Cookie-Klicker-App/app/src/main/res/layout/activity_shop.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

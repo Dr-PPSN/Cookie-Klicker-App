@@ -9,8 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -25,6 +23,7 @@ public class Shop extends AppCompatActivity {
     private static final String FILE_MULTI = "multi.txt";
     private static final String FILE_GRANDMA = "grandma.txt";
     private static final String FILE_BAKERY = "bakery.txt";
+    private static final String FILE_FACTORY = "factory.txt";
     public int digitsFromFile = 0;
     public int score = 0;
     public int score2 = 0;
@@ -32,6 +31,7 @@ public class Shop extends AppCompatActivity {
     public int multi = 0;
     public int grandma = 0;
     public int bakery = 0;
+    public int factory = 0;
 
     //TODO: 2 or 3 New Shop Objects to buy with Billions
     //TODO: button to get Cookies after watching a 30 sec Ad
@@ -45,12 +45,14 @@ public class Shop extends AppCompatActivity {
         Button button_buy_multi = findViewById(R.id.button_buy_multi);
         Button button_buy_grandma = findViewById(R.id.button_buy_grandma);
         Button button_buy_bakery = findViewById(R.id.button_buy_bakery);
+        Button button_buy_factory = findViewById(R.id.button_buy_factory);
         TextView anzahl_auto = findViewById(R.id.anzahl_auto);
         TextView anzahl_multi = findViewById(R.id.anzahl_multi);
         TextView textView_counter_shop = findViewById(R.id.textView_counter_shop);
         TextView anzahl_grandma = findViewById(R.id.anzahl_grandma);
         TextView billions_text2 = findViewById(R.id.billion_text2);
         TextView anzahl_bakery = findViewById(R.id.anzahl_bakery);
+        TextView anzahl_factory = findViewById(R.id.anzahl_factory);
 
         score = loadFile(digitsFromFile, FILE_SCORE);
         score2 = loadFile(digitsFromFile, FILE_SCORE2);
@@ -58,17 +60,20 @@ public class Shop extends AppCompatActivity {
         multi = loadFile(digitsFromFile, FILE_MULTI);
         grandma = loadFile(digitsFromFile, FILE_GRANDMA);
         bakery = loadFile(digitsFromFile, FILE_BAKERY);
+        factory = loadFile(digitsFromFile, FILE_FACTORY);
 
         int autoPreis = 1000;
         int multiPreis = 60;
         int grandmaPreis = 2500;
         int bakeryPreis = 1;
+        int factoryPreis = 100;
 
         textView_counter_shop.setText((String.valueOf(score)));
         anzahl_auto.setText(String.valueOf(auto));
         anzahl_multi.setText(String.valueOf(multi));
         anzahl_grandma.setText(String.valueOf(grandma));
         anzahl_bakery.setText(String.valueOf(bakery));
+        anzahl_factory.setText(String.valueOf(factory));
 
         if (auto != 0){
             for (int i = 0; i < auto; i++){
@@ -94,6 +99,12 @@ public class Shop extends AppCompatActivity {
             }
         }
         button_buy_bakery.setText(String.valueOf(bakeryPreis));
+        if (factory != 0){
+            for (int i = 0; i < factory; i++){
+                factoryPreis = factoryPreis * 2;
+            }
+        }
+        button_buy_factory.setText(String.valueOf(factoryPreis));
 
 
         if (score2 != 0){
@@ -118,7 +129,7 @@ public class Shop extends AppCompatActivity {
             int inputAnzahlAuto = Integer.parseInt(anzahl_auto.getText().toString());
             int buttonAutoText = Integer.parseInt(button_buy_auto.getText().toString());
                 if(score >= buttonAutoText) {
-                    int x1 = purchaseUpgrade(inputAnzahlAuto, buttonAutoText, score);
+                    int x1 = purchaseUpgrade(inputAnzahlAuto, buttonAutoText, score,1);
                     anzahl_auto.setText(String.valueOf(x1));
                     auto = x1;
                     String buffer = button_buy_auto.getText().toString();
@@ -133,7 +144,7 @@ public class Shop extends AppCompatActivity {
             int inputAnzahlMulti = Integer.parseInt(anzahl_multi.getText().toString());
             int buttonMultiText = Integer.parseInt(button_buy_multi.getText().toString());
             if(score >= buttonMultiText) {
-                    int x2 = purchaseUpgrade(inputAnzahlMulti, buttonMultiText, score);
+                    int x2 = purchaseUpgrade(inputAnzahlMulti, buttonMultiText, score,1);
                     anzahl_multi.setText(String.valueOf(x2));
                     multi = x2;
                     String buffer = button_buy_multi.getText().toString();
@@ -148,7 +159,7 @@ public class Shop extends AppCompatActivity {
             int inputAnzahlGrandma = Integer.parseInt(anzahl_grandma.getText().toString());
                 int buttonGrandmaText = Integer.parseInt(button_buy_grandma.getText().toString());
                 if (score >= buttonGrandmaText) {
-                    int x3 = purchaseUpgrade(inputAnzahlGrandma, buttonGrandmaText, score);
+                    int x3 = purchaseUpgrade(inputAnzahlGrandma, buttonGrandmaText, score,1);
                     anzahl_grandma.setText(String.valueOf(x3));
                     grandma = x3;
                     String buffer = button_buy_grandma.getText().toString();
@@ -160,12 +171,10 @@ public class Shop extends AppCompatActivity {
         });
 
         button_buy_bakery.setOnClickListener(v -> {
-            // TODO: Fix incrementation of anzahl_bakery ~~ bugged because of score2 vs score issues
             int inputAnzahlBakery = Integer.parseInt(anzahl_bakery.getText().toString());
             int buttonBakeryText = Integer.parseInt(button_buy_bakery.getText().toString());
             if(score2 >= buttonBakeryText){
-                score2 = score2 - Integer.parseInt(button_buy_bakery.getText().toString());
-                int x4 = purchaseUpgrade(inputAnzahlBakery, buttonBakeryText, score2);
+                int x4 = purchaseUpgrade(inputAnzahlBakery, buttonBakeryText, score2,2);
                 anzahl_bakery.setText(String.valueOf(x4));
                 bakery = x4;
                 String buffer = button_buy_bakery.getText().toString();
@@ -174,12 +183,30 @@ public class Shop extends AppCompatActivity {
                 textView_counter_shop.setText(String.valueOf(score2));
             }
         });
+        button_buy_factory.setOnClickListener(v -> {
+            int inputAnzahlFactory = Integer.parseInt(anzahl_factory.getText().toString());
+            int buttonFactoryText = Integer.parseInt(button_buy_factory.getText().toString());
+            if(score2 >= buttonFactoryText){
+                int x5 = purchaseUpgrade(inputAnzahlFactory, buttonFactoryText, score2,2);
+                anzahl_factory.setText(String.valueOf(x5));
+                factory = x5;
+                String buffer = button_buy_bakery.getText().toString();
+                int y = Integer.parseInt(buffer) * 2;
+                button_buy_factory.setText(String.valueOf(y));
+                textView_counter_shop.setText(String.valueOf(score2));
+            }
+
+        });
 
     }
-    public int purchaseUpgrade(int input, int buttonText, int scoreInt){
-        if(scoreInt >= buttonText){
+    //payment type 1 = normal, 2 = billions
+    public int purchaseUpgrade(int input, int buttonText, int scoreInt, int paymentType){
+        if(scoreInt >= buttonText && paymentType == 1){
             score = score - buttonText;
             return input+1;
+        } else if(scoreInt >= buttonText && paymentType == 2) {
+            score2 = score2 - buttonText;
+            return input +1;
         } else {
             return input;
         }
@@ -192,6 +219,7 @@ public class Shop extends AppCompatActivity {
         saveToFile(String.valueOf(multi),FILE_MULTI);
         saveToFile(String.valueOf(grandma), FILE_GRANDMA);
         saveToFile(String.valueOf(bakery), FILE_BAKERY);
+        saveToFile(String.valueOf(factory), FILE_FACTORY);
     }
 
     private void saveToFile(String data, String FILE){
