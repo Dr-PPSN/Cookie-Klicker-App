@@ -5,6 +5,7 @@
     <string name="save">Save</string>
     <string name="cookie">Cookie</string>
     <string name="cookies">Cookies:</string>
+    <string name="_1">1</string>
     <string name="_2500">2500</string>
     <string name="_60">60</string>
     <string name="click_multiplikator">Click Multiplikator</string>
@@ -12,6 +13,7 @@
     <string name="auto_clicker">Auto-Clicker</string>
     <string name="back">Back</string>
     <string name="grandma">Grandma</string>
+    <string name="bakery">Bakery</string>
     <string name="_0">0</string>
     <string name="billion">Billion</string>
     <string name="settings">Settings</string>
