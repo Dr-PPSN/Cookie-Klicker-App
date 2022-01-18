@@ -39,6 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private static MediaPlayer mediaPlayerMusic;
     private static MediaPlayer mediaPlayerSound;
     public int digitsFromFile = 0;
+    public int digitsFromFile2 = 0;
     public int auto = 0;
     public int multi = 0;
     public int clickvalue = 1;
@@ -55,7 +56,6 @@ public class MainActivity extends AppCompatActivity {
     com.google.android.gms.ads.AdView mAdView;
 
     //TODO: button in Shop activity to get Cookies after watching a 30 sec Ad
-    //TODO: maybe better design and colors (add colors in res/values/colors.xml)
 
     @SuppressLint({"ClickableViewAccessibility", "SetTextI18n"})
     @Override
@@ -77,10 +77,14 @@ public class MainActivity extends AppCompatActivity {
         music = loadFile(1, FILE_MUSIC);
         vib = loadFile(1, FILE_VIB);
         textView_counter.setText(String.valueOf(loadFile(digitsFromFile, FILE_SCORE)));
-        textView_counter2.setText(String.valueOf(loadFile(digitsFromFile, FILE_SCORE2)));
+        textView_counter2.setText(String.valueOf(loadFile(digitsFromFile2, FILE_SCORE2)));
         clickvalue = calculateClickValue(clickvalue,multi);
         button_cookie.setScaleX(1.0f);
         button_cookie.setScaleY(1.0f);
+
+        Log.i("start",String.valueOf(loadFile(bakery, FILE_BAKERY)));
+        Log.i("start",String.valueOf(loadFile(digitsFromFile, FILE_SCORE)));
+        Log.i("start",String.valueOf(loadFile(digitsFromFile, FILE_SCORE2)));
 
         if (music == 1) {
             playBackgroundMusic(R.raw.placeholder_background);
@@ -116,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
             }
             cookieClick(manualyClick);
         });
-
         button_Shop.setOnClickListener(v -> {
             // save the current cookie counter value to external file
             saveAll();

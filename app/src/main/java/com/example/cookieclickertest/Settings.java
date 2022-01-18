@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -22,6 +23,8 @@ public class Settings extends AppCompatActivity {
     private static final String FILE_AUTO = "auto.txt";
     private static final String FILE_MULTI = "multi.txt";
     private static final String FILE_GRANDMA = "grandma.txt";
+    private static final String FILE_BAKERY = "bakery.txt";
+    private static final String FILE_FACTORY = "factory.txt";
     private static final String FILE_SOUND = "sound.txt";
     private static final String FILE_MUSIC = "music.txt";
     private static final String FILE_VIB = "vib.txt";
@@ -30,6 +33,8 @@ public class Settings extends AppCompatActivity {
     public int score = 0;
     public int score2 = 0;
     public int grandma = 0;
+    public int bakery = 0;
+    public int factory = 0;
     public int sound = 1;
     public int music = 1;
     public int vib = 1;
@@ -69,10 +74,22 @@ public class Settings extends AppCompatActivity {
         }
 
         back_button.setOnClickListener(view -> {
+            saveToFile(String.valueOf(sound), FILE_SOUND);
+            saveToFile(String.valueOf(music), FILE_MUSIC);
+            saveToFile(String.valueOf(vib), FILE_VIB);
             Intent intent = new Intent(Settings.this, MainActivity.class);
             startActivity(intent);
         });
-        reset_button.setOnClickListener(view -> saveAll());
+        reset_button.setOnClickListener(view -> {
+            Toast toast = Toast.makeText(getApplicationContext(), "Reset", Toast.LENGTH_SHORT);
+            toast.show();
+            saveAll();
+            saveAll();
+            saveAll();
+            saveAll();
+            saveAll();
+            saveAll();
+        });
         sound_switch.setOnClickListener(view -> {
             if (sound_switch.isChecked()){
                 sound = 1;
@@ -103,6 +120,9 @@ public class Settings extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
+        saveToFile(String.valueOf(sound), FILE_SOUND);
+        saveToFile(String.valueOf(music), FILE_MUSIC);
+        saveToFile(String.valueOf(vib), FILE_VIB);
         Intent intent = new Intent(Settings.this, MainActivity.class);
         startActivity(intent);
     }
@@ -112,31 +132,44 @@ public class Settings extends AppCompatActivity {
         saveToFile(String.valueOf(auto),FILE_AUTO);
         saveToFile(String.valueOf(multi),FILE_MULTI);
         saveToFile(String.valueOf(grandma), FILE_GRANDMA);
+        saveToFile(String.valueOf(bakery), FILE_BAKERY);
+        saveToFile(String.valueOf(factory), FILE_FACTORY);
+        saveToFile(String.valueOf(sound), FILE_SOUND);
+        saveToFile(String.valueOf(music), FILE_MUSIC);
+        saveToFile(String.valueOf(vib), FILE_VIB);
+
+        Log.i("saveAll",String.valueOf(loadFile(bakery, FILE_BAKERY)));
+        Log.i("saveAll",String.valueOf(loadFile(score, FILE_SCORE)));
+        Log.i("saveAll",String.valueOf(loadFile(score2, FILE_SCORE2)));
     }
 
     private void saveToFile(String data, String FILE){
-        FileOutputStream fos = null;
+        FileOutputStream fos2 = null;
         try {
-            fos = openFileOutput(FILE, MODE_PRIVATE);
-            fos.write(data.getBytes());
+            fos2 = openFileOutput(FILE, MODE_PRIVATE);
+            fos2.write(data.getBytes());
+            Log.i("saveToFile()","first try!");
         } catch (IOException e) {
+            Log.i("saveToFile()","first catch!");
             e.printStackTrace();
         } finally {
-            if (fos!=null){
+            if (fos2!=null){
                 try {
-                    fos.close();
+                    fos2.close();
+                    Log.i("saveToFile()","second try!");
                 }catch (IOException e){
+                    Log.i("saveToFile()","second catch!");
                     e.printStackTrace();
                 }
             }
         }
     }
     public int loadFile(int digitFromFile, String FILE){
-        FileInputStream fis = null;
+        FileInputStream fis2 = null;
 
         try {
-            fis = openFileInput(FILE);
-            InputStreamReader isr = new InputStreamReader(fis);
+            fis2 = openFileInput(FILE);
+            InputStreamReader isr = new InputStreamReader(fis2);
             BufferedReader br = new BufferedReader(isr);
             StringBuilder sb = new StringBuilder();
             String text;
@@ -157,9 +190,9 @@ public class Settings extends AppCompatActivity {
             e.printStackTrace();
             return digitFromFile;
         }finally {
-            if (fis != null){
+            if (fis2 != null){
                 try {
-                    fis.close();
+                    fis2.close();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
